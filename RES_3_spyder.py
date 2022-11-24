@@ -58,8 +58,6 @@ network.add("Generator",
             marginal_cost = 0,
             p_max_pu = CF_wind)
 
-# Testing
-network.generators_t.p_max_pu
 
 network.lopf(network.snapshots, 
              pyomo=False,
@@ -169,11 +167,22 @@ Joined_model_installed_capacity = network.generators.p_nom_opt
 
 import matplotlib.pyplot as plt
 
-plt.plot([4000, 4000, 4000, 4000, 4000], color='black', label='demand')
-plt.plot(network.generators_t.p['onshorewind'][0:96], color='blue', label='onshore wind')
-plt.plot(network.generators_t.p['solar'][0:96], color='orange', label='solar')
-plt.plot(network.links_t.p0['DK1 - DK2'][0:96],color='red', label='link (positive from DK1 to DK2')
-plt.xlabel("Time [Hours]")
-plt.ylabel("Energy [MW]")
+plt.plot([4000, 4000, 4000, 4000, 4000], color='black', label='demand',linewidth=3)
+plt.plot(network.generators_t.p['onshorewind'][0:96], color='blue', label='onshore wind',linewidth=3)
+plt.plot(network.generators_t.p['solar'][0:96], color='orange', label='solar',linewidth=3)
+plt.plot(network.links_t.p0['DK1 - DK2'][0:96],color='red', label='link (DK1 -> DK2)',linewidth=3)
+plt.xlabel("Time [Hours]",fontsize=18)
+plt.ylim(-2000, 4100)
+plt.grid()
+plt.ylabel("Energy [MW]",fontsize=18)
 plt.legend(fancybox=True, shadow=True, loc='best')
-plt.title('Dispatch, transfer and demand of energy')
+plt.title('Dispatch, transfer and demand of energy',fontsize=20)
+
+# Print all results
+print(DK_1_el_price_1_node)
+print(DK_1_installed_capacity_1_node)
+print(DK_2_el_price_1_node)
+print(DK_2_installed_capacity_1_node)
+print(Joined_model_avg_el_price)
+print(LinkCapacity)
+print(Joined_model_installed_capacity)
